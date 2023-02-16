@@ -1,13 +1,13 @@
 from setuptools import setup
 
 setup(
-    name='your-package-name',
+    name='ezselenium',
     version='0.1.0',
-    description='Your package description',
-    author='Your Name',
-    author_email='you@example.com',
-    url='https://github.com/yourusername/your-package',
-    packages=['your_package_name'],
+    description='Common selenium functions',
+    author='Ben Brunyee',
+    author_email='brunyeeb@gmail.com',
+    url='https://github.com/benbrunyee/ezselenium',
+    packages=['ezselenium'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
