@@ -1,0 +1,36 @@
+2023-02-16 07:38:49.216 DEBUG:Getting chrome version
+2023-02-16 07:38:49.279 DEBUG:Found chrome version 110.0.5481.77
+2023-02-16 07:38:49.280 DEBUG:Chrome version: ['110', '0', '5481', '77']
+2023-02-16 07:38:49.280 DEBUG:Getting required chromedriver
+2023-02-16 07:39:27.034 DEBUG:Getting chrome version
+2023-02-16 07:39:27.095 DEBUG:Found chrome version 110.0.5481.77
+2023-02-16 07:39:27.095 DEBUG:Chrome version: ['110', '0', '5481', '77']
+2023-02-16 07:39:27.096 DEBUG:Getting required chromedriver
+2023-02-16 07:39:27.096 DEBUG:Found chromedriver D:\Documents\ai-shirt-maker\bot\chromedrivers
+2023-02-16 07:39:27.096 DEBUG:Opening browser
+2023-02-16 07:40:50.259 DEBUG:Getting chrome version
+2023-02-16 07:40:50.323 DEBUG:Found chrome version 110.0.5481.77
+2023-02-16 07:40:50.324 DEBUG:Chrome version: ['110', '0', '5481', '77']
+2023-02-16 07:40:50.324 DEBUG:Getting required chromedriver
+2023-02-16 07:40:57.401 DEBUG:Getting chrome version
+2023-02-16 07:40:57.455 DEBUG:Found chrome version 110.0.5481.77
+2023-02-16 07:40:57.455 DEBUG:Chrome version: ['110', '0', '5481', '77']
+2023-02-16 07:40:57.455 DEBUG:Getting required chromedriver
+2023-02-16 07:41:05.430 DEBUG:Getting chrome version
+2023-02-16 07:41:05.485 DEBUG:Found chrome version 110.0.5481.77
+2023-02-16 07:41:05.485 DEBUG:Chrome version: ['110', '0', '5481', '77']
+2023-02-16 07:41:05.485 DEBUG:Getting required chromedriver
+2023-02-16 07:41:05.486 DEBUG:Found chromedriver None
+2023-02-16 07:41:05.486 DEBUG:Opening browser
+2023-02-16 07:43:22.822 DEBUG:Getting chrome version
+2023-02-16 07:43:22.886 DEBUG:Found chrome version 110.0.5481.77
+2023-02-16 07:43:22.886 DEBUG:Chrome version: ['110', '0', '5481', '77']
+2023-02-16 07:43:22.887 DEBUG:Getting required chromedriver
+2023-02-16 07:43:22.887 DEBUG:Found chromedriver D:\Documents\ai-shirt-maker\bot\chromedrivers\chromedriver_{chrome_major_ver}.exe
+2023-02-16 07:43:22.887 DEBUG:Opening browser
+2023-02-16 07:44:13.185 DEBUG:Getting chrome version
+2023-02-16 07:44:13.246 DEBUG:Found chrome version 110.0.5481.77
+2023-02-16 07:44:13.246 DEBUG:Chrome version: ['110', '0', '5481', '77']
+2023-02-16 07:44:13.246 DEBUG:Getting required chromedriver
+2023-02-16 07:44:13.247 DEBUG:Found chromedriver D:\Documents\ai-shirt-maker\bot\chromedrivers\chromedriver_110.exe
+2023-02-16 07:44:13.247 DEBUG:Opening browser

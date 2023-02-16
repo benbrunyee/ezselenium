@@ -7,32 +7,9 @@ import re
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-w", "--showwindow",
-                    help="Show the browser window", action="store_true")
-args = parser.parse_args()
-
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
-logger = logging.getLogger("messageFollowers")
-logger.setLevel(logging.DEBUG)
-
-formatter = logging.Formatter(
-    '%(asctime)s.%(msecs)03d %(levelname)s:%(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-ch.setFormatter(formatter)
-
-# If username was provided, use that as a postfix for the log file
-log_file_name = "log.txt"
-
-fh = logging.FileHandler(filename=log_file_name)
-fh.setLevel(logging.DEBUG)
-fh.setFormatter(formatter)
-
-logger.addHandler(ch)
-logger.addHandler(fh)
+LOGGER = None
 
 SYSTEM = platform.system()
 
@@ -43,8 +20,13 @@ if SYSTEM == "Windows":
 
 
 def fail(msg):
-    logger.error(msg)
+    LOGGER.error(msg)
     exit(1)
+
+
+def log(msg):
+    if LOGGER:
+        LOGGER.debug(msg)
 
 
 def get_chrome_version():
@@ -70,18 +52,21 @@ def get_chrome_version():
     if not chrome_version:
         fail("Could not find chrome version")
 
-    logger.debug(f"Found chrome version {chrome_version}")
+    log(f"Found chrome version {chrome_version}")
 
     return chrome_version.split(".")
 
 
-def get_required_chromedriver(chrome_major_ver):
+def get_required_chromedriver(chrome_major_ver, driver_dir=None):
+    if not driver_dir:
+        driver_dir = DIR_PATH + "/chromedrivers"
+
     chrome_major_ver = int(chrome_major_ver)
 
     valid_versions = []
 
     # Read all the chromedriver_"version".exe files and find all the valid versions
-    for file in os.listdir(DIR_PATH + "/chromedrivers"):
+    for file in os.listdir(driver_dir):
         if file.startswith("chromedriver_"):
             version = None
 
@@ -97,11 +82,11 @@ def get_required_chromedriver(chrome_major_ver):
 
     if chrome_major_ver in valid_versions:
         if SYSTEM == "Windows":
-            target_driver = DIR_PATH + \
-                f"\\chromedrivers\\chromedriver_{chrome_major_ver}.exe"
+            target_driver = driver_dir + \
+                f"\\chromedriver_{chrome_major_ver}.exe"
         elif SYSTEM == "Linux":
-            target_driver = DIR_PATH + \
-                f"/chromedrivers/chromedriver_linux_{chrome_major_ver}"
+            target_driver = driver_dir + \
+                f"/chromedriver_linux_{chrome_major_ver}"
     else:
         fail(f"Chrome version {chrome_major_ver} not supported")
 
@@ -111,7 +96,7 @@ def get_required_chromedriver(chrome_major_ver):
     return target_driver
 
 
-def open_browser(driver_path="selenium.exe"):
+def open_browser(driver_path="selenium.exe", headless=True):
     global DRIVER
 
     browserProfile = webdriver.ChromeOptions()
@@ -123,7 +108,7 @@ def open_browser(driver_path="selenium.exe"):
     browserProfile.add_argument("--disable-gpu")
     browserProfile.add_argument("--disable-dev-shm-usage")
     browserProfile.add_argument("--no-sandbox")
-    if not args.showwindow:
+    if headless:
         browserProfile.add_argument("--headless")
 
     # Create service object
@@ -132,38 +117,62 @@ def open_browser(driver_path="selenium.exe"):
     if SYSTEM == "Windows":
         service.creationflags = CREATE_NO_WINDOW
 
-    logger.debug("Opening browser")
+    log("Opening browser")
 
     DRIVER = webdriver.Chrome(service=service, options=browserProfile)
 
     # Put onto second monitor
-    if args.showwindow:
-        logger.debug("Moving browser to second screen on the right")
+    if not headless:
+        log("Moving browser to second screen on the right")
         DRIVER.set_window_position(2000, 0)
         DRIVER.maximize_window()
 
     return DRIVER
 
-def load_browser():
+
+def load_browser(driver_dir=None, headless=True):
     global DRIVER
 
     # Get chrome version
-    logger.debug("Getting chrome version")
+    log("Getting chrome version")
     chrome_version = get_chrome_version()
-    logger.debug(f"Chrome version: {chrome_version}")
+    log(f"Chrome version: {chrome_version}")
 
     # Get required chromedriver
-    logger.debug("Getting required chromedriver")
-    driver_path = get_required_chromedriver(chrome_version[0])
-    logger.debug(f"Found chromedriver {driver_path}")
+    log("Getting required chromedriver")
+
+    driver_path = get_required_chromedriver(
+        chrome_version[0], driver_dir=driver_dir)
+
+    log(f"Found chromedriver {driver_path}")
 
     # Open browser
-    DRIVER = open_browser(driver_path)
+    DRIVER = open_browser(driver_path, headless=headless)
 
     return DRIVER
 
-if __name__ == "__main__":
-    load_browser()
 
-url = DRIVER.command_executor._url  # "http://127.0.0.1:60622/hub"
-session_id = DRIVER.session_id
+if __name__ == "__main__":
+    LOGGER = logging.getLogger("messageFollowers")
+    LOGGER.setLevel(logging.DEBUG)
+
+    formatter = logging.Formatter(
+        '%(asctime)s.%(msecs)03d %(levelname)s:%(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
+    ch.setFormatter(formatter)
+
+    log_file_name = "ezselenium.lot"
+
+    fh = logging.FileHandler(filename=log_file_name)
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(formatter)
+
+    LOGGER.addHandler(ch)
+    LOGGER.addHandler(fh)
+
+    driver = load_browser(
+        "D:\\Documents\\ai-shirt-maker\\bot\\chromedrivers", headless=False)
+
+    driver.quit()

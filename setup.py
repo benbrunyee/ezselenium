@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='ezselenium',
-    version='0.1.2',
+    version='0.1.5',
     description='Common selenium functions',
     author='Ben Brunyee',
     author_email='brunyeeb@gmail.com',
