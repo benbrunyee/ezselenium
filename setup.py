@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='ezselenium',
-    version='0.1.0',
+    version='0.1.2',
     description='Common selenium functions',
     author='Ben Brunyee',
     author_email='brunyeeb@gmail.com',
@@ -11,7 +11,6 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',

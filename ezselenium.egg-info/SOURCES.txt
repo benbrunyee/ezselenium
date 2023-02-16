@@ -1,5 +1,6 @@
+README.md
 setup.py
-ezselenium/ezselenium.py
+ezselenium/__init__.py
 ezselenium.egg-info/PKG-INFO
 ezselenium.egg-info/SOURCES.txt
 ezselenium.egg-info/dependency_links.txt
