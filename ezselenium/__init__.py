@@ -1,4 +1,3 @@
-import argparse
 import logging
 import os
 import platform
@@ -34,7 +33,8 @@ def get_chrome_version():
 
     if SYSTEM == "Windows":
         stream = os.popen(
-            r"wmic datafile where name='C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' get Version /value")
+            r"wmic datafile where name='C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' get Version /value"
+        )
     elif SYSTEM == "Linux":
         stream = os.popen(r"google-chrome --version")
     else:
@@ -70,7 +70,7 @@ def get_required_chromedriver(chrome_major_ver, driver_dir=None):
         if file.startswith("chromedriver_"):
             version = None
 
-            if SYSTEM == "Windows":
+            if SYSTEM == "Windows" and "linux" not in file:
                 version = file.split("_")[1].split(".")[0]
             elif SYSTEM == "Linux":
                 version = file.split("_")[2]
@@ -82,11 +82,9 @@ def get_required_chromedriver(chrome_major_ver, driver_dir=None):
 
     if chrome_major_ver in valid_versions:
         if SYSTEM == "Windows":
-            target_driver = driver_dir + \
-                f"\\chromedriver_{chrome_major_ver}.exe"
+            target_driver = driver_dir + f"\\chromedriver_{chrome_major_ver}.exe"
         elif SYSTEM == "Linux":
-            target_driver = driver_dir + \
-                f"/chromedriver_linux_{chrome_major_ver}"
+            target_driver = driver_dir + f"/chromedriver_linux_{chrome_major_ver}"
     else:
         fail(f"Chrome version {chrome_major_ver} not supported")
 
@@ -103,7 +101,8 @@ def open_browser(driver_path="selenium.exe", headless=True):
     browserProfile.add_argument("--disable-notifications")
     browserProfile.add_argument("--disable-extensions")
     browserProfile.add_experimental_option(
-        'prefs', {'intl.accept_languages': 'en,en_US'})
+        "prefs", {"intl.accept_languages": "en,en_US"}
+    )
     browserProfile.add_argument("--disable-infobars")
     browserProfile.add_argument("--disable-gpu")
     browserProfile.add_argument("--disable-dev-shm-usage")
@@ -141,8 +140,7 @@ def load_browser(driver_dir=None, headless=True):
     # Get required chromedriver
     log("Getting required chromedriver")
 
-    driver_path = get_required_chromedriver(
-        chrome_version[0], driver_dir=driver_dir)
+    driver_path = get_required_chromedriver(chrome_version[0], driver_dir=driver_dir)
 
     log(f"Found chromedriver {driver_path}")
 
@@ -157,7 +155,8 @@ if __name__ == "__main__":
     LOGGER.setLevel(logging.DEBUG)
 
     formatter = logging.Formatter(
-        '%(asctime)s.%(msecs)03d %(levelname)s:%(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+        "%(asctime)s.%(msecs)03d %(levelname)s:%(message)s", datefmt="%Y-%m-%d %H:%M:%S"
+    )
 
     ch = logging.StreamHandler()
     ch.setLevel(logging.DEBUG)
@@ -173,6 +172,7 @@ if __name__ == "__main__":
     LOGGER.addHandler(fh)
 
     driver = load_browser(
-        "D:\\Documents\\ai-shirt-maker\\bot\\chromedrivers", headless=False)
+        "D:\\Documents\\ai-shirt-maker\\bot\\chromedrivers", headless=False
+    )
 
     driver.quit()
